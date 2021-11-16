@@ -66,18 +66,20 @@ function opciones(ruta, color) {
       //para buscar iconos https://materialdesignicons.com/
       iconName = "home";
       break;
-    case "comentarios":
-      iconName = "comment";
+    case "busquedas":
+      iconName = "search";
       break;
     case "favoritos":
       iconName = "favorite";
       break;
+    case "comentarios":
+      iconName = "comment";
+      break;
+    
     case "top":
-      iconName = "menu";
+      iconName = "stars";
       break;
-    case "busquedas":
-      iconName = "search";
-      break;
+   
     case "cuenta":
       iconName = "settings";
       break;
