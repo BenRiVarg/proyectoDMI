@@ -1,7 +1,10 @@
 import React from 'react'; 
 import { StyleSheet, Text, View,FlatList, ActivityIndicator,TouchableOpacity} from 'react-native'; 
+import {useNavigation} from "@react-navigation/native";
 import {Image} from 'react-native-elements'; 
 import {size} from 'lodash'; 
+
+
 
 
 export default function ListaSucursales(propiedades){ 
@@ -58,14 +61,17 @@ const styles=StyleSheet.create({
 });
 
 function Sucursales(propiedades){ 
+    const navegacion= useNavigation();
+
     //Recibe la lista de sucursales 
     const {sucursales} =propiedades; 
     //en cada iteración obtiene los datos de la sucursal 
-    const {imagenes,nombre,direccion, descripcion} =sucursales.item; 
+    const {imagenes,nombre,direccion, descripcion,id} =sucursales.item; 
     //Método que se ejecutará al dar clic a los items de la lista 
     const consultarRestaurante = () => { 
-        console.log("consultando"); 
+        navegacion.navigate("ver_sucursal",{id,nombre});
     }; 
+
     return ( 
         //Agregamos el clic a cada item al dar clic el item se opaca 
         <TouchableOpacity onPress={consultarRestaurante}> 

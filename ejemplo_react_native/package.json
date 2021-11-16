@@ -28,6 +28,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
