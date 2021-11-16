@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 import Sucursales from "../screens/Sucursales/Sucursales";
 import AgregarSuc from "../screens/Sucursales/AgregarSuc";
 import Sucursal from "../screens/Sucursales/Sucursal";
+import AddReview from "../screens/Sucursales/AddReview";
 
 export default function RutasSucursales() {
   //Las primera pantalla que aparece en la pila será la que se muestre
@@ -29,7 +30,11 @@ export default function RutasSucursales() {
       name="ver_sucursal" 
       component={Sucursal}
       />
-      
+
+    <Stack.Screen 
+      name="add-review-sucursal" 
+      component={AddReview} 
+    />
     </Stack.Navigator>
   );
 }
