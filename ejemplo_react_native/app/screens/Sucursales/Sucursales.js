@@ -32,11 +32,7 @@ export default function Sucursales() {
         }); 
     },[]); 
 
- /*    //Consultando sucursales 
-    useEffect(()=>{ 
-     
-        
-  },[]); */
+ 
 
   //Visualizar nuevas sucursales registradas 
   useFocusEffect( 

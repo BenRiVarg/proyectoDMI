@@ -6,21 +6,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //Creamos el objeto de control de nuestra pila de pantallas
 const Stack = createNativeStackNavigator();
 //Importamos las pantallas que deseamos agregar a la ruta
-import Sucursales from "../screens/Comentarios/Comentarios";
-import AgregarSuc from "../screens/Comentarios/AgregarComent";
+import Comentarios from "../screens/Comentarios/Comentarios";
+import AddComment from "../screens/Comentarios/AgregarComentario";
 export default function RutasComentarios() {
   //Las primera pantalla que aparece en la pila será la que se muestre
   //por default al importar nuestro archivo
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="sucursal"
-        component={Sucursales}
+        name="Comentarios"
+        component={Comentarios}
         options={{ title: "Comentarios" }}
       />
       <Stack.Screen
-        name="agregar-suc"
-        component={AgregarSuc}
+        name="Agregar Comentarios"
+        component={AddComment}
         options={{ title: "Nuevo Comentario" }}
       />
     </Stack.Navigator>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState ,useCallback} from 'react'; 
+import { useFocusEffect } from "@react-navigation/native";
 import {StyleSheet, View, Text, ScrollView, Dimensions,ActivityIndicator} from "react-native"; 
 import {firebaseApp} from "../../utils/firebase"; 
 import firebase from 'firebase/app'; 
@@ -18,6 +19,7 @@ const screenWidth=Dimensions.get("window").width;
 
 
 export default function Sucursal(propiedades){ 
+    
 
     //Extraemos los objetos navigation y route  
     const {navigation,route}=propiedades; 
@@ -37,18 +39,26 @@ export default function Sucursal(propiedades){
         navigation.setOptions({ title: nombre }); 
       }, []); 
 
-      useEffect(() => { 
-        /*Consultamos la sucursal con id recibido como parámetro desde la lista de sucursales*/ 
-       db.collection("sucursales").doc(id).get() 
+     
+
+     useFocusEffect( 
+        useCallback(()=>{  
+
+                    /*Consultamos la sucursal con id recibido como parámetro desde la lista de sucursales*/ 
+            db.collection("sucursales").doc(id).get() 
             .then((resp) =>{ 
-               /*Extraemos los datos del documento recuperado en la consulta*/ 
+                /*Extraemos los datos del documento recuperado en la consulta*/ 
                 const datos=resp.data(); 
                 /*Asignamos el id al conjunto de datos*/ 
                 datos.id=resp.id; 
                 /*Asignamos los datos de la sucursal recuperado a nuestro useState*/ 
                 setSucursal(datos); 
+                //Asignamos un rating promedio al state que se muestra en la vista
+                setRating(datos.rating)
             }); 
-     }, []);
+
+         },[]) 
+        );
 
    return( 
         <View> 
@@ -75,6 +85,7 @@ export default function Sucursal(propiedades){
                     <Reviews 
                     navigation={navigation} 
                     id={sucursal.id} 
+                    nombre={nombre}
                     /> 
                 </ScrollView> 
             ):( 
@@ -91,6 +102,10 @@ export default function Sucursal(propiedades){
 
 function Informacion(propiedades){ 
     const {nombre, direccion, descripcion, rating}=propiedades; 
+
+    console.log("Debuggueando -------------");
+    console.log(rating);
+    console.log("-------------------");
     const listaItems =[ 
         //El primer elemento de la lista será nuestra dirección 
         { 
