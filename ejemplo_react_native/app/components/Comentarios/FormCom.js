@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Alert, Dimensions } from "react-native";
 import { Icon, Avatar, Image, Input, Button } from "react-native-elements";
-import * as Permission from "expo-permissions";
-import * as ImagePicker from "expo-image-picker";
-//Importamos la función map para recuperar las imagenes del arreglo
-import { map, size, filter } from "lodash";
-import uuid from "random-uuid-v4";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/storage";
@@ -19,24 +14,49 @@ const db = firebase.firestore(firebaseApp);
 const WidthScreen = Dimensions.get("window").width;
 console.disableYellowBox = true;
 
-export default function FormSuc(toast) {
+export default function FormCom(toast) {
   const navegacion=useNavigation();
   //Generamos una variable de estado para cada campo
-  const [fechaCreacion, setfechaCreacion] = useState("");
-  const [direccion, setDireccion] = useState("");
+
+  const [nombre,setNombre]=useState("");
   const [descripcion, setDescripcion] = useState("");
   const { toastRef } = toast;
+  const [isLoading, setIsLoading] = useState(false); 
   /*Función que nos mostrará el valor de las variables de estado
  que contendrán la información de los campos del formulario*/
   const agregar = () => {
-    console.log(fechaCreacion);
-    console.log(direccion);
-    console.log(descripcion);
+    
+    const user = firebase.auth().currentUser; 
+   
+
+    var comentario={
+      idUser: user.uid,
+      nombre:nombre,
+      descripcion:descripcion,
+      createAt: new Date()
+    }
+
+    
+
     //Verificamos que no se envíen datos vacíos
-    if (!fechaCreacion || !direccion || !descripcion) {
+    if (!nombre || !descripcion) {
       //Enviamos el mensaje al cuerpo del toast para hacerlo visible
       toastRef.current.show("No puedes dejar campos vacios");
-    } //Si todo es correcto probaremos la carga de imágenes a Storage
+    }  else{
+      db.collection("comments") 
+    .add(comentario) 
+    .then(() => { 
+        /*si se almacena el comentario, ejecutamos la actualización 
+        del raiting de la sucursal*/ 
+      setIsLoading(false); 
+      navegacion.navigate("Comentarios", { 
+      }) 
+    }) 
+    .catch(() => { 
+      toastRef.current.show("Error al registrar Comentario"); 
+      setIsLoading(false); 
+    }); 
+    }
   };
 
  
@@ -52,12 +72,11 @@ export default function FormSuc(toast) {
       <Formulario
         /*Enviamos las funciones set que nos permitiran asignar el
  valor del formulario a las variables de estado*/
-        setNombre={setfechaCreacion}
-        setDireccion={setDireccion}
+        setNombre={setNombre}
         setDescripcion={setDescripcion}
       />
       <Button
-        title="Registrar"
+        title="Guardar Comentario"
         buttonStyle={styles.btn}
         /*Al dar clic activamos el método agregar */
         onPress={agregar}
@@ -69,21 +88,16 @@ export default function FormSuc(toast) {
 /*Función que contiene la estructura del formulario
 recibe en el apartado de propiedades las funciones set de las variables de estado*/
 function Formulario(propiedades) {
-  const { setNombre, setDireccion, setDescripcion } = propiedades;
+  const { setNombre, setDescripcion } = propiedades;
 
   return (
     <View style={styles.vista}>
+    
       <Input
-        placeholder="Fecha de creacion"
+        placeholder="Nombre Comentario"
         containerStyle={styles.form}
         //Modificamos el valor de la variable de estado acorde a lo que el usuario escribe
-        onChange={(e) => setfechaCreacion(e.nativeEvent.text)}
-      />
-      <Input
-        placeholder="Dirección"
-        containerStyle={styles.form}
-        //Modificamos el valor de la variable de estado acorde a lo que el usuario escribe
-        onChange={(e) => setDireccion(e.nativeEvent.text)}
+        onChange={(e) => setNombre(e.nativeEvent.text)}
       />
       <Input
         placeholder="Descripción"

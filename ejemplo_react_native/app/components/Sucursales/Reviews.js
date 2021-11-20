@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useEffect, useState ,useCallback} from 'react'; 
+import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native"; 
 import { Button, Rating } from "react-native-elements"; 
 import { map } from "lodash"; 
@@ -35,7 +36,7 @@ function Review(propiedades) {
     //recibe la navegación de la ventana anterior 
     // para regresar después de registrar la puntuación 
     //y el id de la sucursal que se actualizará 
-    const { navigation, id } = propiedades; 
+    const { navigation, id,nombre } = propiedades; 
     //Solo se permitirá registrar comentarios y valuación si existe sesión 
     const [userLogged, setUserLogged] = useState(false); 
     //estado que almacenará las puntuaciones registradas 
@@ -44,8 +45,10 @@ function Review(propiedades) {
     firebase.auth().onAuthStateChanged((user) => { 
       user ? setUserLogged(true) : setUserLogged(false); 
     }); 
-    useEffect(() => { 
-      //consultamos la colección de reviews de la sucursal y almacenamos 
+  
+    useFocusEffect( 
+      useCallback(()=>{  
+  //consultamos la colección de reviews de la sucursal y almacenamos 
       // los documentos en el useState de reviews 
       db.collection("reviews") 
         .where("idSucursal", "==", id) 
@@ -58,8 +61,11 @@ function Review(propiedades) {
             resultReview.push(data); 
           }); 
           setReviews(resultReview); 
-        }); 
-    }, []);
+        });           
+
+       },[]) 
+      );
+
     return ( 
         <View> 
           {/*Si el usuario tiene sesión activa se permite registrar la opinión y voto, 
@@ -76,7 +82,7 @@ function Review(propiedades) {
               }} 
               onPress={() => 
                 navigation.navigate("add-review-sucursal", { 
-                  id: id, 
+                  id: id, nombre: nombre
                 }) 
               } 
             />) : ( 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"; 
+import React, { useState, useRef,useEffect } from "react"; 
 import { StyleSheet, Text, View } from "react-native"; 
 //Nos permitirá marcar la puntuación a través de estrellas 
 import { AirbnbRating, Button, Input } from "react-native-elements"; 
@@ -11,7 +11,7 @@ const db = firebase.firestore(firebaseApp);
 export default function AddReview(propiedades) { 
     
     const { navigation, route } = propiedades; 
-    const { id } = route.params; 
+    const { id ,nombre} = route.params; 
     //definimos los useState para almacenar los datos de la votación 
     const [rating, setRating] = useState(null); 
     const [title, setTitle] = useState(""); 
@@ -20,6 +20,13 @@ export default function AddReview(propiedades) {
     // y actualización de puntuación 
     const [isLoading, setIsLoading] = useState(false); 
     const toastRef = useRef();
+
+    useEffect(() => { 
+      /*setOption nos permite cambiar las propiedades del stack ver_sucursal, en 
+      nuestro caso cambiaremos el titulo de la ventana con el nombre de la     
+       sucursal seleccionada de la lista*/ 
+     navigation.setOptions({ title: nombre }); 
+   }, []); 
 
     //Función que se ejecuta al enviar el comentario 
   const addRevew = () => { 
