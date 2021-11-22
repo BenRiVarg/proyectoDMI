@@ -9,12 +9,13 @@ import {size} from 'lodash';
 
 
 export default function ListarTop(propiedades){ 
+    //Extraccion de las sucursales del prop
      const {sucursales}=propiedades; 
      
-    //const sucursales = []; 
+    
     return( 
         <View> 
-
+            {/* Condicional para saber si hay sucursales o mostrar mensaje de cargando */}
             {size(sucursales)>0?( 
                <FlatList 
                data={sucursales} 
@@ -25,7 +26,7 @@ export default function ListarTop(propiedades){
                 <View style={styles.sucursales}> 
                      
                     <ActivityIndicator size="large" color="#0000ff"/> 
-                    <Text>Cargando Comentarios</Text> 
+                    <Text>Cargando Sucursales</Text> 
                 </View> 
             )} 
 
@@ -67,6 +68,7 @@ const styles=StyleSheet.create({
 
 function Sucursal(propiedades){
 
+  //recuperacion de los datos de la sucursal mediante desestructuracion
   const navegacion= useNavigation();
      const {sucursal}= propiedades;
      
@@ -79,6 +81,7 @@ function Sucursal(propiedades){
 
     return(
       <View>
+        {/* Navegacion a los comentarios de la sucursal seleccionada */}
         <TouchableOpacity onPress={()=>{ navegacion.navigate("comentarioSucursal",{id,nombre})}}>
             <View style={styles.lista}> 
                 <View style={styles.viewImagen}> 
