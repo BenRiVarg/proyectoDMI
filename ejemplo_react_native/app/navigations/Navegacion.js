@@ -6,7 +6,7 @@ import { Icon } from "react-native-elements";
 import RutasSucursales from "./RutasSucursales";
 import RutasComentarios from "./RutasComentarios";
 import Favoritos from "../screens/Favoritos";
-import TopSucursales from "../screens/TopSucursales";
+import RutasTop from "./RutasTop";
 import Busquedas from "../screens/Busquedas";
 import RutasCuentas from "./RutasCuenta";
 
@@ -42,7 +42,11 @@ export default function Navegacion() {
           options={{ headerShown: false }}
         />
         <Tab.Screen name="favoritos" component={Favoritos} />
-        <Tab.Screen name="top" component={TopSucursales} />
+        <Tab.Screen
+          name="top"
+          component={RutasTop}
+          options={{ headerShown: false }}
+        />
         <Tab.Screen name="busquedas" component={Busquedas} />
         <Tab.Screen
           name="cuenta"
