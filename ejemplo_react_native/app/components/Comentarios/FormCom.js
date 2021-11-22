@@ -12,7 +12,6 @@ const db = firebase.firestore(firebaseApp);
 
 //Extraemos el ancho de la ventana para ajustar la imagen al tamaño del dispositivo
 const WidthScreen = Dimensions.get("window").width;
-console.disableYellowBox = true;
 
 export default function FormCom(toast) {
   const navegacion=useNavigation();
@@ -62,16 +61,9 @@ export default function FormCom(toast) {
  
   return (
     <ScrollView style={styles.scroll}>
-      {/*Implementamos la función que nos mostrará la imagen de encabezado
- la cual será la primera imagen de la sucursal a registrar, para ello
- enviamos como parámetro la imagen de la posición 0 del arreglo*/}
-
-      {/*El formulario de sucursales contendra una estructura amplia
- para separarlo de la estructura general lo separaremos de la estructura
- a través de una función Formulario*/}
+     
       <Formulario
-        /*Enviamos las funciones set que nos permitiran asignar el
- valor del formulario a las variables de estado*/
+ 
         setNombre={setNombre}
         setDescripcion={setDescripcion}
       />
