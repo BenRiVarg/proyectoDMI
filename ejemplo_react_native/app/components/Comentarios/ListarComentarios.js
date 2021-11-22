@@ -64,21 +64,30 @@ const styles=StyleSheet.create({
 });
 
 function Comentario(propiedades){
-    /* console.log(propiedades.comentario);
-    const {descripcion}= propiedades.comentario.descripcion;
-   // console.log(nombre);
-    console.log(descripcion); */
-    //console.log(createAt);
+  console.log("resultado-------------");
+    const {comentario} = propiedades;
+    //console.log(comentario.item);
+    const {nombre,descripcion,fecha}=comentario.item;
+
+     //Convertimos la fecha Timestamp  de firebase a una fecha de JavaScript 
+    //Con una precision de millisecond. 
+    const fechaComentario = new Date(fecha.seconds * 1000); 
+
     return(
     <View style={styles.ctnComentario}>
-      <Text style={styles.titComentario}>Componente de Comentario listos</Text>
+      <Text style={styles.titComentario}>{nombre}</Text>
       
       <View style={styles.ctnDescripcion}>
-      <Text style={styles.Descripcion}> Not TrollLorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem </Text>
+      <Text style={styles.Descripcion}> {descripcion}</Text>
       </View>
       
       <View style={styles.Fecha}>
-      <Text style={{color:"#b3b3cc"}}>fecha </Text>
+      <Text style={{color:"#b3b3cc"}}>
+            {fechaComentario.getDate()}/{fechaComentario.getMonth() + 1}/ 
+            {fechaComentario.getFullYear()} - {fechaComentario.getHours()}: 
+            {fechaComentario.getMinutes() < 10 ? "0" : ""} 
+            {fechaComentario.getMinutes()} 
+      </Text>
       </View>
      
     </View>);
