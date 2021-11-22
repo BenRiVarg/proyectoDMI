@@ -103,9 +103,6 @@ export default function Sucursal(propiedades){
 function Informacion(propiedades){ 
     const {nombre, direccion, descripcion, rating}=propiedades; 
 
-    console.log("Debuggueando -------------");
-    console.log(rating);
-    console.log("-------------------");
     const listaItems =[ 
         //El primer elemento de la lista será nuestra dirección 
         { 

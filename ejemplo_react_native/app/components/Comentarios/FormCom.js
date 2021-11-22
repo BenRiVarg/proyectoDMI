@@ -33,7 +33,7 @@ export default function FormCom(toast) {
       idUser: user.uid,
       nombre:nombre,
       descripcion:descripcion,
-      createAt: new Date()
+      fecha: new Date()
     }
 
     

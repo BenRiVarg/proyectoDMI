@@ -24,6 +24,14 @@ export default function Comentarios() {
 
   //definimos el acceso a las rutas de sucursales
   
+    //validamos sesión existente 
+    useEffect(()=>{ 
+      firebase.auth().onAuthStateChanged((userInfo)=>{ 
+      //si existe una sesión activa asignamos los datos de sesión al useState usuario 
+          setUsuario(userInfo); 
+      }); 
+  },[]); 
+
   useFocusEffect( 
     useCallback(()=>{ 
          /*accedemos a la colección de sucursales, consultamos los registros 
@@ -37,7 +45,7 @@ export default function Comentarios() {
       });  */
 
       const arrComentario=[]; 
-      db.collection("comments").orderBy("createAt","desc").limit(10).get() 
+      db.collection("comments").orderBy("fecha","desc").limit(10).get() 
           .then((res)=>{ 
             setPuntero(res.docs[res.docs.length -1]); 
             res.forEach((doc)=>{ 
@@ -60,6 +68,7 @@ export default function Comentarios() {
     <View style={styles.vista}>
       {/*Colocaremos un botón de agregar nueva sucursal*/}
       <ListarComentarios comentarios={comentario}/>
+      {usuario && ( 
       <Icon
         reverse
         type="material_community"
@@ -69,6 +78,7 @@ export default function Comentarios() {
         //Vinculamos el envió a la ruta agregar-suc
         onPress={() => navegacion.navigate("Agregar Comentarios")}
       />
+      )}
     </View>
   );
 }

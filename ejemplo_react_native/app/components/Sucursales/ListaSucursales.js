@@ -8,6 +8,7 @@ import {size} from 'lodash';
 
 
 export default function ListaSucursales(propiedades){ 
+  
     const {sucursales}=propiedades; 
     //const sucursales = []; 
     return( 
@@ -65,6 +66,11 @@ function Sucursales(propiedades){
 
     //Recibe la lista de sucursales 
     const {sucursales} =propiedades; 
+
+    console.log("Ejemplo Sucursales----------------")
+    console.log(propiedades);
+    console.log("Ejemplo Sucursales----------------")
+    
     //en cada iteración obtiene los datos de la sucursal 
     const {imagenes,nombre,direccion, descripcion,id} =sucursales.item; 
     //Método que se ejecutará al dar clic a los items de la lista 
