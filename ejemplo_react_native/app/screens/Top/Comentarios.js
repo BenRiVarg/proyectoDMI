@@ -14,12 +14,11 @@ export default function Comentarios(propiedades) {
     const [reviews, setReviews] = useState([]); 
 
     useEffect(() => { 
-        /*setOption nos permite cambiar las propiedades del stack ver_sucursal, en 
-        nuestro caso cambiaremos el titulo de la ventana con el nombre de la     
-         sucursal seleccionada de la lista*/ 
+       
+        //Cambiar el titulo de la View en base a los datos enviados en la ventana anterior
        navigation.setOptions({ title: nombre }); 
      }, []); 
-
+     //Consulta de los comentarios por sucursal
      useEffect(() => { 
       db.collection("reviews") 
       .where("idSucursal", "==", id) 
@@ -53,7 +52,7 @@ export default function Comentarios(propiedades) {
               } 
             />
             </View>
-            <Text>Comentarios Conectadas</Text>
+           {/* Despliegue de los comentarios para el usuario */}
             {map(reviews, (review, index) => ( 
                 <Review key={index} review={review} /> 
               ))} 
@@ -62,6 +61,7 @@ export default function Comentarios(propiedades) {
 }
 
 function Review(propiedades) { 
+    //Componente extraido de los elementos vistos en clase. Tiene el mismo funcionamiento y estructura
     const { title, review, rating, createAt } = propiedades.review; 
     //Convertimos la fecha Timestamp  de firebase a una fecha de JavaScript 
     //Con una precision de millisecond. 

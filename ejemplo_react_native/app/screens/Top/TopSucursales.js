@@ -3,10 +3,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import {firebaseApp} from "../../utils/firebase"; 
 import firebase from 'firebase/app'; 
 import "firebase/firestore";
-import { StyleSheet, Text, View,FlatList, ActivityIndicator,TouchableOpacity} from 'react-native'; 
-import { Icon } from "react-native-elements";
+import { Text, View} from 'react-native'; 
 import { useNavigation } from "@react-navigation/native";
-import { Button, Rating,Image } from "react-native-elements"; 
 
 import ListarTop from "../../components/Top/ListarTop";
 const db = firebase.firestore(firebaseApp); 
@@ -14,9 +12,8 @@ const db = firebase.firestore(firebaseApp);
 
 
 export default function TopSucursales() {
-    //definimos el acceso a las rutas de sucursales
-  const navegacion = useNavigation();
-  //useState de sesión 
+  
+  //useState de usuario
   const [usuario, setUsuario]=useState(null); 
 
   //useState para arreglo de Sucursales 
@@ -36,7 +33,7 @@ export default function TopSucursales() {
 
  
 
-  //Visualizar nuevas sucursales registradas 
+  //Visualizar sucursales correctamente rankeadas
   useFocusEffect( 
     useCallback(()=>{ 
          /*accedemos a la colección de sucursales, consultamos los registros 
@@ -63,14 +60,7 @@ export default function TopSucursales() {
           }); 
            //Al terminar de recuperar todos los documentos los almacenamos en el useState sucursales 
            setSucursales(arrSucursales); 
-           /* console.log("RESULTADOS ----------------")
-           console.log(arrSucursales[0].nombre)
-
-           //const {sucursales}=arrSucursales[0];
-           
-           
-
-           console.log("RESULTADOS ----------------") */
+         
 
            
           });
