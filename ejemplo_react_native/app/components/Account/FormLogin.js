@@ -21,6 +21,7 @@ export default function FormLogin(toast) {
   nos permitirá por el momento verificar en consola
   los datos recuperados del formulario*/
   const onSubmit = () => {
+    console.log("Disparando el Login");
     //Verificamos que no se envíen datos vacíos
     if (
       isEmpty(datos.email) ||
@@ -28,12 +29,12 @@ export default function FormLogin(toast) {
     ) {
       //Enviamos el mensaje al cuerpo del toast para hacerlo visible
       toastRef.current.show("No puedes dejar campos vacios");
-      console.log("No puedes dejar campos vacios");
+      
     }
     else if (!validarEmail(datos.email)) {
       //Enviamos el mensaje al cuerpo del toast para hacerlo visible
       toastRef.current.show("Estructura del email incorrecta");
-      console.log("Estructura del email incorrecta");
+     
     } 
     else {
       /*Ejecutamos la autenticación por email, la función requiere dos valores
@@ -42,13 +43,16 @@ export default function FormLogin(toast) {
       como respuesta y lo visualizamos en consola. Si el resultado de una promesa es
       un reject mostramos el error en el catch
       */
-        toastRef.current.show(firebase.auth().currentUser);
+        //toastRef.current.show(firebase.auth().currentUser);
+        console.log(datos.email);
+        console.log(datos.password);
+
         firebase.auth().signInWithEmailAndPassword(datos.email, datos.password)
         .then((respuesta) => {
           navigation.navigate("cuentas");
         })
         .catch(() => {
-          toastRef.current.show("El correo o la Contraseña estan mal")
+          toastRef.current.show("Lo sentimos: EL correo o contraseña no están registrados")
         });
       /*  toastRef.current.show("Envio correcto de los datos");
       console.log("ok");
